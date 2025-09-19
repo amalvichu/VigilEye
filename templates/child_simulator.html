@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Child Chat Simulator</title>
+     <link rel="stylesheet" href="/static/style.css">
+ </head>
+ <body>
+     <nav class="navbar">
+         <a href="#" class="nav-brand">My Website</a>
+         <ul class="nav-links">
+             <li><a href="/">Home</a></li>
+             <li><a href="/child-simulator/">Child Simulator</a></li>
+             <li><a href="/carousel-page/">Carousel</a></li>
+         </ul>
+     </nav>
+
+    <!-- Main content container -->
+    <main class="container mx-auto px-6 py-12">
+        <section class="bg-white p-8 rounded-lg shadow-lg">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">Welcome to Our Website</h2>
+            <p class="text-gray-600 leading-relaxed">
+                This is a simple website featuring a clean, responsive navigation bar and a dynamic image carousel. The entire site is built using just one HTML file, leveraging Tailwind CSS for rapid styling. The carousel functionality is powered by a small JavaScript script within the same file, allowing for easy navigation between slides. This project demonstrates how to create a modern, interactive web page with a minimal footprint.
+            </p>
+        </section>
+    </main>
+
+    <!-- JavaScript for Carousel and Mobile Menu -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Carousel logic
+            const carousel = document.getElementById('carousel');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const items = document.querySelectorAll('.carousel-item');
+            let currentIndex = 0;
+
+            function updateCarousel() {
+                const itemWidth = items[0].clientWidth;
+                carousel.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
+            }
+
+            nextBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex + 1) % items.length;
+                updateCarousel();
+            });
+
+            prevBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex - 1 + items.length) % items.length;
+                updateCarousel();
+            });
+
+            window.addEventListener('resize', updateCarousel);
+            updateCarousel(); // Initial call to set position
+
+            // Mobile menu logic
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const navLinks = document.getElementById('nav-links');
+
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                navLinks.classList.toggle('hidden');
+            });
+        });
+    </script>
+
+</body>
+</html>

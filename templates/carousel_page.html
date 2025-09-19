@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carousel Page</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/carousel.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="#" class="nav-brand">My Website</a>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/child-simulator/">Child Simulator</a></li>
+            <li><a href="/carousel-page/">Carousel</a></li>
+        </ul>
+    </nav>
+
+    <div class="carousel-container">
+        <div class="carousel-slide">
+            <img src="https://via.placeholder.com/800x400/FF0000/FFFFFF?text=Slide+1" alt="Slide 1">
+        </div>
+        <div class="carousel-slide">
+            <img src="https://via.placeholder.com/800x400/00FF00/FFFFFF?text=Slide+2" alt="Slide 2">
+        </div>
+        <div class="carousel-slide">
+            <img src="https://via.placeholder.com/800x400/0000FF/FFFFFF?text=Slide+3" alt="Slide 3">
+        </div>
+        <button class="prev" onclick="plusSlides(-1)">&#10094;</button>
+        <button class="next" onclick="plusSlides(1)">&#10095;</button>
+    </div>
+
+    <script>
+        let slideIndex = 1;
+        showSlides(slideIndex);
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("carousel-slide");
+            if (n > slides.length) {slideIndex = 1}
+            if (n < 1) {slideIndex = slides.length}
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slides[slideIndex-1].style.display = "block";
+        }
+    </script>
+</body>
+</html>
