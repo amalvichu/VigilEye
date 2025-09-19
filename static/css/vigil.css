@@ -1,0 +1,447 @@
+/* Vigil App Styles */
+:root {
+    --primary-color: #0056b3;
+    --primary-hover: #004494;
+    --secondary-color: #f4f4f4;
+    --accent-color: #007bff;
+    --text-color: #333;
+    --light-text: #777;
+    --border-color: #ddd;
+    --error-color: #dc3545;
+    --success-color: #28a745;
+    --warning-color: #ffc107;
+    --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --transition-speed: 0.3s;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--secondary-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    color: var(--text-color);
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-card {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+    max-width: 420px;
+    width: 100%;
+    animation: fadeIn 0.5s ease;
+    transition: transform var(--transition-speed);
+}
+
+.form-card:hover {
+    transform: translateY(-5px);
+}
+
+.logo-container {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.logo {
+    width: 60px;
+    height: 60px;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 10px;
+    font-size: 24px;
+}
+
+h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: var(--primary-color);
+}
+
+.tagline {
+    font-size: 14px;
+    color: var(--light-text);
+    margin-bottom: 0;
+}
+
+h2 {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.form-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    outline: none;
+    font-size: 16px;
+    background-color: transparent;
+    transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.15);
+}
+
+input.error {
+    border-color: var(--error-color);
+}
+
+label {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    color: var(--light-text);
+    transition: all 0.2s ease;
+    pointer-events: none;
+    background-color: transparent;
+}
+
+input:focus+label,
+input:not(:placeholder-shown)+label {
+    top: -8px;
+    left: 8px;
+    font-size: 12px;
+    color: var(--primary-color);
+    background: #fff;
+    padding: 0 4px;
+}
+
+input.error+label {
+    color: var(--error-color);
+}
+
+.error-message {
+    font-size: 12px;
+    color: var(--error-color);
+    margin-top: 5px;
+    min-height: 17px;
+}
+
+.password-group {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    top: 14px;
+    cursor: pointer;
+    color: var(--light-text);
+}
+
+.password-strength {
+    margin-top: 8px;
+}
+
+.strength-meter {
+    height: 4px;
+    background-color: #e0e0e0;
+    border-radius: 2px;
+    margin-bottom: 5px;
+}
+
+.strength-meter-fill {
+    height: 100%;
+    border-radius: 2px;
+    width: 0;
+    transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.strength-text {
+    font-size: 12px;
+    color: var(--light-text);
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: flex-start;
+}
+
+input[type="checkbox"] {
+    margin-right: 10px;
+    margin-top: 3px;
+}
+
+.checkbox-label {
+    position: static;
+    font-size: 14px;
+    color: var(--text-color);
+}
+
+.checkbox-label a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.checkbox-label a:hover {
+    text-decoration: underline;
+}
+
+.primary-button {
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 16px;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    width: 100%;
+    font-weight: 500;
+    margin-top: 10px;
+}
+
+.primary-button:hover {
+    background-color: var(--primary-hover);
+    transform: scale(1.02);
+}
+
+.secondary-button {
+    background-color: #e9ecef;
+    color: var(--text-color);
+    font-size: 16px;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    width: 100%;
+    font-weight: 500;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.secondary-button:hover {
+    background-color: #dee2e6;
+}
+
+.form-footer {
+    margin-top: 25px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.link {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color var(--transition-speed);
+}
+
+.link:hover {
+    color: var(--primary-hover);
+    text-decoration: underline;
+}
+
+/* Login page specific styles */
+.login-tabs {
+    display: flex;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.tab-btn {
+    flex: 1;
+    background: none;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    color: var(--light-text);
+    transition: all var(--transition-speed);
+    border-bottom: 2px solid transparent;
+}
+
+.tab-btn.active {
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.tab-content {
+    display: block;
+}
+
+.hidden {
+    display: none;
+}
+
+.resend-timer {
+    font-size: 12px;
+    color: var(--light-text);
+    text-align: right;
+    margin-top: 5px;
+}
+
+/* Success animation */
+.success-animation {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.checkmark-circle {
+    width: 80px;
+    height: 80px;
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    background-color: var(--success-color);
+    border-radius: 50%;
+}
+
+.checkmark {
+    border-radius: 5px;
+}
+
+.checkmark.draw:after {
+    content: '';
+    display: block;
+    width: 25px;
+    height: 50px;
+    border: solid white;
+    border-width: 0 5px 5px 0;
+    transform: rotate(45deg);
+    position: absolute;
+    top: 14px;
+    left: 28px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+        transform: translateX(-5px);
+    }
+
+    20%,
+    40%,
+    60%,
+    80% {
+        transform: translateX(5px);
+    }
+}
+
+.shake {
+    animation: shake 0.5s;
+}
+
+/* Loading animation */
+.loading-spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 0.8s linear infinite;
+    margin-right: 8px;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Responsive styles */
+@media (max-width: 480px) {
+    .form-card {
+        padding: 20px;
+        border-radius: 8px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    h2 {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+
+    .logo {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="tel"] {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    label {
+        font-size: 14px;
+    }
+
+    .primary-button,
+    .secondary-button {
+        padding: 10px;
+        font-size: 14px;
+    }
+}

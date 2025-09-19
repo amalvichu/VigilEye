@@ -1,0 +1,127 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Website with Carousel</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom scroll behavior for the carousel */
+        .carousel-container::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans antialiased">
+
+    <!-- Navigation Bar -->
+    <nav class="bg-white shadow-lg fixed top-0 left-0 w-full z-50">
+        <div class="container mx-auto px-6 py-3 md:flex md:justify-between md:items-center">
+            <div class="flex items-center justify-between">
+                <a href="#" class="text-2xl font-bold text-gray-800 lg:text-3xl hover:text-gray-600 transition-colors duration-300">
+                    My Brand
+                </a>
+            </div>
+
+            <!-- Navigation Links -->
+            <div class="flex-1 items-center md:flex hidden" id="nav-links">
+                <div class="flex flex-col md:flex-row md:mx-6">
+                    <a class="my-1 text-gray-700 hover:text-blue-500 md:mx-4 md:my-0 transition-colors duration-300" href="#">Home</a>
+                    <a class="my-1 text-gray-700 hover:text-blue-500 md:mx-4 md:my-0 transition-colors duration-300" href="#">About</a>
+                    <a class="my-1 text-gray-700 hover:text-blue-500 md:mx-4 md:my-0 transition-colors duration-300" href="#">Services</a>
+                    <a class="my-1 text-gray-700 hover:text-blue-500 md:mx-4 md:my-0 transition-colors duration-300" href="#">Contact</a>
+                </div>
+            </div>
+
+            <!-- Mobile menu button -->
+            <div class="md:hidden flex items-center">
+                <button id="mobile-menu-button" type="button" class="text-gray-500 hover:text-gray-600 focus:outline-none focus:text-gray-600 transition-colors duration-300">
+                    <svg viewBox="0 0 24 24" class="h-6 w-6 fill-current">
+                        <path fill-rule="evenodd" d="M4 5h16a1 1 0 010 2H4a1 1 0 110-2zm0 6h16a1 1 0 010 2H4a1 1 0 010-2zm0 6h16a1 1 0 010 2H4a1 1 0 010-2z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div class="md:hidden hidden bg-white shadow-inner p-4 transition-all duration-300 ease-in-out" id="mobile-menu">
+            <a class="block my-2 text-gray-700 hover:text-blue-500 transition-colors duration-300" href="#">Home</a>
+            <a class="block my-2 text-gray-700 hover:text-blue-500 transition-colors duration-300" href="#">About</a>
+            <a class="block my-2 text-gray-700 hover:text-blue-500 transition-colors duration-300" href="#">Services</a>
+            <a class="block my-2 text-gray-700 hover:text-blue-500 transition-colors duration-300" href="#">Contact</a>
+        </div>
+    </nav>
+    
+    <!-- Hero Section with Image Carousel -->
+    <div class="relative w-full overflow-hidden mt-16">
+        <!-- Carousel Container -->
+        <div id="carousel" class="carousel-container flex transition-transform duration-700 ease-in-out">
+            <!-- Carousel Images -->
+            <div class="carousel-item flex-shrink-0 w-full h-96 md:h-screen bg-cover bg-center rounded-lg shadow-lg" style="background-image: url('https://placehold.co/1200x800/222222/cccccc?text=Image+1');"></div>
+            <div class="carousel-item flex-shrink-0 w-full h-96 md:h-screen bg-cover bg-center rounded-lg shadow-lg" style="background-image: url('https://placehold.co/1200x800/333333/cccccc?text=Image+2');"></div>
+            <div class="carousel-item flex-shrink-0 w-full h-96 md:h-screen bg-cover bg-center rounded-lg shadow-lg" style="background-image: url('https://placehold.co/1200x800/444444/cccccc?text=Image+3');"></div>
+            <div class="carousel-item flex-shrink-0 w-full h-96 md:h-screen bg-cover bg-center rounded-lg shadow-lg" style="background-image: url('https://placehold.co/1200x800/555555/cccccc?text=Image+4');"></div>
+        </div>
+
+        <!-- Carousel Controls -->
+        <button id="prev-btn" class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white text-gray-800 p-2 rounded-full shadow-lg hover:bg-gray-200 transition-colors duration-300">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+        </button>
+        <button id="next-btn" class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white text-gray-800 p-2 rounded-full shadow-lg hover:bg-gray-200 transition-colors duration-300">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+        </button>
+    </div>
+
+    <!-- Main content container -->
+    <main class="container mx-auto px-6 py-12">
+        <section class="bg-white p-8 rounded-lg shadow-lg">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">Welcome to Our Website</h2>
+            <p class="text-gray-600 leading-relaxed">
+                This is a simple website featuring a clean, responsive navigation bar and a dynamic image carousel. The entire site is built using just one HTML file, leveraging Tailwind CSS for rapid styling. The carousel functionality is powered by a small JavaScript script within the same file, allowing for easy navigation between slides. This project demonstrates how to create a modern, interactive web page with a minimal footprint.
+            </p>
+        </section>
+    </main>
+
+    <!-- JavaScript for Carousel and Mobile Menu -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Carousel logic
+            const carousel = document.getElementById('carousel');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const items = document.querySelectorAll('.carousel-item');
+            let currentIndex = 0;
+
+            function updateCarousel() {
+                const itemWidth = items[0].clientWidth;
+                carousel.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
+            }
+
+            nextBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex + 1) % items.length;
+                updateCarousel();
+            });
+
+            prevBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex - 1 + items.length) % items.length;
+                updateCarousel();
+            });
+
+            window.addEventListener('resize', updateCarousel);
+            updateCarousel(); // Initial call to set position
+
+            // Mobile menu logic
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const navLinks = document.getElementById('nav-links');
+
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                navLinks.classList.toggle('hidden');
+            });
+        });
+    </script>
+
+</body>
+</html>

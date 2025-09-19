@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vigil - Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/vigil.css' %}">
+</head>
+
+<body>
+    <div class="container">
+        <div class="form-card" id="login-card">
+            <div class="logo-container">
+                <div class="logo">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h1>Vigil</h1>
+                <p class="tagline">Keeping Kids Safe, Silently.</p>
+            </div>
+
+            <h2>Login to Your Account</h2>
+
+            <div class="login-tabs">
+                <button class="tab-btn active" data-tab="kinder-id">Kinder ID</button>
+                <button class="tab-btn" data-tab="phone">Phone Number</button>
+            </div>
+
+            <div class="tab-content" id="kinder-id-tab">
+                <form id="kinder-id-form">
+                    <div class="form-group">
+                        <input type="text" id="kinder-id" placeholder=" " required>
+                        <label for="kinder-id">Kinder ID</label>
+                        <div class="error-message"></div>
+                    </div>
+
+                    <div class="form-group password-group">
+                        <input type="password" id="login-password" placeholder=" " required>
+                        <label for="login-password">Password</label>
+                        <i class="toggle-password fas fa-eye-slash"></i>
+                        <div class="error-message"></div>
+                    </div>
+
+                    <button type="submit" class="primary-button">Login Securely</button>
+                </form>
+            </div>
+
+            <div class="tab-content hidden" id="phone-tab">
+                <form id="phone-form">
+                    <div class="form-group">
+                        <input type="tel" id="login-phone" placeholder=" " required>
+                        <label for="login-phone">Phone Number</label>
+                        <div class="error-message"></div>
+                    </div>
+
+                    <button type="button" id="generate-otp" class="secondary-button">Generate OTP</button>
+
+                    <div class="form-group otp-group hidden">
+                        <input type="text" id="otp" placeholder=" " required>
+                        <label for="otp">Enter OTP</label>
+                        <div class="error-message"></div>
+                        <div class="resend-timer">Resend OTP in <span id="timer">60</span>s</div>
+                    </div>
+
+                    <button type="submit" class="primary-button otp-submit hidden">Login Securely</button>
+                </form>
+            </div>
+
+            <div class="form-footer">
+                <p><a href="#" class="link">Forgot Password?</a></p>
+                <p>Don't have an account? <a href="register.html" class="link">Register</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="vigil.js"></script>
+</body>
+
+</html>

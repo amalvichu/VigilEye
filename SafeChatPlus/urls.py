@@ -22,8 +22,7 @@ from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('api.urls')),
-    path('', TemplateView.as_view(template_name='dashboard.html'), name='dashboard'),
+    path('', include('api.urls')), # This will direct the root URL to the api app's urls
     path('child-simulator/', TemplateView.as_view(template_name='child_simulator.html'), name='child_simulator'),
     path('carousel-page/', TemplateView.as_view(template_name='carousel_page.html'), name='carousel_page'),
 ]

@@ -2,8 +2,10 @@ import json
 import hashlib
 from datetime import datetime
 from django.http import JsonResponse
+from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
+from django.core.paginator import Paginator
 from .models import Device, Alert
 
 # Helper function to generate a cryptographic Kindred ID
@@ -89,6 +91,38 @@ def reset_device(request):
             return JsonResponse({'error': 'Invalid JSON'}, status=400)
     return JsonResponse({'error': 'Only POST requests are allowed'}, status=405)
 
+def index(request):
+    return render(request, 'index.html')
+
+def login(request):
+    return render(request, 'login.html')
+
+def register(request):
+    return render(request, 'register.html')
+
+def dashboard(request):
+    risk_filter = request.GET.get('risk', 'all')
+    alerts = Alert.objects.all().order_by('-timestamp')
+    
+    if risk_filter == 'high':
+        alerts = alerts.filter(score__gte=7)
+    elif risk_filter == 'medium':
+        alerts = alerts.filter(score__gte=4, score__lt=7)
+    elif risk_filter == 'low':
+        alerts = alerts.filter(score__lt=4)
+    
+    paginator = Paginator(alerts, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    critical_alerts = alerts.filter(score__gte=7)
+    
+    context = {
+        'page_obj': page_obj,
+        'critical_alerts': critical_alerts,
+        'risk_filter': risk_filter
+    }
+    return render(request, 'dashboard.html', context)
+
 def get_alerts(request):
     if request.method == 'GET':
         alerts = Alert.objects.all().order_by('-timestamp')
@@ -99,6 +133,7 @@ def get_alerts(request):
             'score': alert.score,
             'timestamp': alert.timestamp.isoformat()
         } for alert in alerts]
-        return JsonResponse(alerts_data, safe=False)
+        return JsonResponse({'alerts': alerts_data})
     return JsonResponse({'error': 'Only GET requests are allowed'}, status=405)
+    
 
