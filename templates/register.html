@@ -67,12 +67,6 @@
                     <div class="error-message"></div>
                 </div>
 
-                <div class="form-group">
-                    <input type="text" id="child-name" placeholder=" " required>
-                    <label for="child-name">Child's Name / Nickname</label>
-                    <div class="error-message"></div>
-                </div>
-
                 <div class="form-group checkbox-group">
                     <input type="checkbox" id="terms" required>
                     <label for="terms" class="checkbox-label">I agree to the <a href="#">Terms & Conditions</a></label>
@@ -94,7 +88,7 @@
         </div>
     </div>
 
-    <script src="vigil.js"></script>
+    <script src="{% static 'validation.js' %}"></script>
 </body>
 
 </html>
