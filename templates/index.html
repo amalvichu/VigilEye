@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modern Website with Carousel</title>
+    <title>VigilEye</title>
+    <link rel="icon" href="https://example.com/favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .carousel-container::-webkit-scrollbar {
@@ -41,9 +42,8 @@
             <div class="items-center flex w-full justify-center" id="nav-links">
                 <div class="flex flex-col md:flex-row justify-center">
                     <a class="my-1 text-gray-300 hover:text-white md:mx-4 md:my-0 transition-colors duration-300" href="#">Home</a>
-                    <a class="my-1 text-gray-300 hover:text-white md:mx-4 md:my-0 transition-colors duration-300" href="#">About</a>
-                    <a class="my-1 text-gray-300 hover:text-white md:mx-4 md:my-0 transition-colors duration-300" href="#">Services</a>
-                    <a class="my-1 text-gray-300 hover:text-white md:mx-4 md:my-0 transition-colors duration-300" href="#">Contact</a>
+                    <a class="my-1 text-gray-300 hover:text-white md:mx-4 md:my-0 transition-colors duration-300" href="#about-section">About</a>
+                    <a class="my-1 text-gray-300 hover:text-white md:mx-4 md:my-0 transition-colors duration-300" href="#features-section">Features</a>
                     <a class="my-1 text-gray-300 hover:text-white md:mx-4 md:my-0 transition-colors duration-300" href="/login">Sign In/Sign Up</a>
                 </div>
             </div>
@@ -60,9 +60,8 @@
         
         <div class="md:hidden hidden bg-gray-900 shadow-inner p-4 transition-all duration-300 ease-in-out" id="mobile-menu">
             <a class="block my-2 text-gray-300 hover:text-white transition-colors duration-300" href="#">Home</a>
-            <a class="block my-2 text-gray-300 hover:text-white transition-colors duration-300" href="#">About</a>
-            <a class="block my-2 text-gray-300 hover:text-white transition-colors duration-300" href="#">Services</a>
-            <a class="block my-2 text-gray-300 hover:text-white transition-colors duration-300" href="#">Contact</a>
+            <a class="block my-2 text-gray-300 hover:text-white transition-colors duration-300" href="#about-section">About</a>
+            <a class="block my-2 text-gray-300 hover:text-white transition-colors duration-300" href="#features-section">Features</a>
             <a class="block my-2 text-gray-300 hover:text-white transition-colors duration-300" href="/login">Sign In/Sign Up</a>
         </div>
     </nav>
@@ -73,35 +72,35 @@
         <div id="carousel" class="carousel-container flex transition-transform duration-700 ease-in-out">
   
             <div class="carousel-item relative flex-shrink-0 w-full h-screen bg-cover bg-top rounded-lg shadow-lg" style="background-image: url('/static/images/child1.png');">
-                <div class="absolute inset-x-0 bottom-0 flex items-end mb-6 mb-6 mb-6 mb-6 mb-6 justify-center bg-black bg-opacity-50 p-4">
+                <div class="absolute inset-x-0 bottom-0 flex items-end mb-0 mb-0 mb-0 mb-0 mb-0 justify-center bg-black bg-opacity-50 p-4">
                     <p class="text-white text-xl font-bold text-center leading-relaxed">
                         Protecting Our Future,<br>One Child at a Time
                     </p>
                 </div>
             </div>
             <div class="carousel-item relative flex-shrink-0 w-full h-screen bg-cover bg-center rounded-lg shadow-lg" style="background-image: url('/static/images/child2.png');">
-                <div class="absolute inset-x-0 bottom-0 flex items-end mb-6 mb-6 mb-6 mb-6 mb-6 justify-center bg-black bg-opacity-50 p-4">
+                <div class="absolute inset-x-0 bottom-0 flex items-end mb-0 mb-0 mb-0 mb-0 mb-0 justify-center bg-black bg-opacity-50 p-4">
                     <p class="text-white text-xl font-bold text-center leading-relaxed">
                         Every Child Deserves<br>a Safe Tomorrow
                     </p>
                 </div>
             </div>
             <div class="carousel-item relative flex-shrink-0 w-full h-screen bg-cover bg-center rounded-lg shadow-lg" style="background-image: url('/static/images/child3.png');">
-                <div class="absolute inset-x-0 bottom-0 flex items-end mb-6 mb-6 mb-6 mb-6 mb-6 justify-center bg-black bg-opacity-50 p-4">
+                <div class="absolute inset-x-0 bottom-0 flex items-end mb-0 mb-0 mb-0 mb-0 mb- justify-center bg-black bg-opacity-50 p-4">
                     <p class="text-white text-xl font-bold text-center leading-relaxed">
                         Guardians of Innocence:<br>Ensuring Child Safety
                     </p>
                 </div>
             </div>
             <div class="carousel-item relative flex-shrink-0 w-full h-screen bg-cover bg-center rounded-lg shadow-lg" style="background-image: url('/static/images/child4.png');">
-                <div class="absolute inset-x-0 bottom-0 flex items-end mb-6 mb-6 mb-6 mb-6 mb-6 justify-center bg-black bg-opacity-50 p-4">
+                <div class="absolute inset-x-0 bottom-0 flex items-end mb-0 mb-0 mb-0 mb-0 mb-0 justify-center bg-black bg-opacity-50 p-4">
                     <p class="text-white text-xl font-bold text-center leading-relaxed">
                         Empowering Children,<br>Securing Their World
                     </p>
                 </div>
             </div>
             <div class="carousel-item relative flex-shrink-0 w-full h-screen bg-cover bg-center rounded-lg shadow-lg" style="background-image: url('/static/images/child5.png');">
-                <div class="absolute inset-x-0 bottom-0 flex items-end mb-6 mb-6 mb-6 mb-6 mb-6 justify-center bg-black bg-opacity-50 p-4">
+                <div class="absolute inset-x-0 bottom-0 flex items-end mb-0 mb-0 mb-0 mb-0 mb-0 justify-center bg-black bg-opacity-50 p-4">
                     <p class="text-white text-xl font-bold text-center leading-relaxed">
                         A Community United<br>for Child Protection
                     </p>
@@ -119,12 +118,12 @@
     </div>
 
     <main class="container mx-auto px-6 py-12 bg-[#ebf0ff] bg-opacity-90 rounded-lg shadow-inner mt-8">
-        <section class="fade-in bg-gradient-to-r from-[#ebf0ff] to-[#9687f5] p-12 rounded-2xl shadow-2xl hover:shadow-3xl transition-shadow duration-300 max-w-2xl mx-auto my-12">
+        <section id="about-section" class="fade-in bg-gradient-to-r from-[#ebf0ff] to-[#9687f5] p-12 rounded-2xl shadow-2xl hover:shadow-3xl transition-shadow duration-300 max-w-2xl mx-auto my-12">
             <h2 class="text-4xl font-bold text-gray-800 mb-6 text-center">About VigilEye</h2>
-            <p class="text-gray-700 leading-relaxed text-lg text-center max-w-3xl mx-auto">
-                Protecting Digital Childhoods, One Alert at a Time
-Every day, millions of children navigate an increasingly complex digital landscape. While technology connects us like never before, it also exposes our most vulnerable family members to cyberbullying, online predators, and inappropriate content. Traditional parental control apps force families to choose between privacy and protection. We believe this choice shouldn't exist.
-Vigil was born from a simple yet powerful idea: what if we could detect genuine online threats in real time while respecting children's privacy and building family trust? Our AI-powered platform analyzes digital conversations for signs of harassment, grooming, and explicit content, instantly alerting parents when their child faces real danger.
+             <h5 style="text-align: center;">Protecting Digital Childhoods, One Alert at a Time</h5><br>
+            <p class="text-gray-700 leading-relaxed text-lg text-center max-w-3xl mx-auto" style="text-align: justify;">
+Every day in our world, millions of children navigate an increasingly complex digital landscape. While technology connects us like never before, it also exposes our most vulnerable family members to cyberbullying, online predators, and inappropriate content. Traditional parental control apps force families to choose between privacy and protection. We believe this choice shouldn't exist.
+VigilEye was born from a simple yet powerful idea: what if we could detect genuine online threats in real time while respecting children's privacy and building family trust? Our AI-powered platform analyzes digital conversations for signs of harassment, grooming, and explicit content, instantly alerting parents when their child faces real danger.
             </p>
             <div class="flex justify-center mt-8">
                 <button class="bg-[#2d284b] hover:bg-[#1a172e] text-white font-semibold py-3 px-6 rounded-full transition duration-300 transform hover:scale-105">
@@ -137,73 +136,82 @@ Vigil was born from a simple yet powerful idea: what if we could detect genuine 
             <div class="flex flex-col md:flex-row items-center justify-between mb-8">
                 <div class="md:w-1/2 p-4">
                     <h2 class="text-3xl font-bold text-gray-800 mb-4">Our Vision</h2>
-                    <p class="text-gray-600 leading-relaxed text-lg">
-                        At VigilEye, we envision a world where every child is safe, nurtured, and empowered to reach their full potential. We strive to be at the forefront of child protection, utilizing innovative technology and community collaboration to create a secure digital and physical environment for the next generation.
+                    <p class="text-gray-600 leading-relaxed text-lg" style="text-align: justify;">
+Today's prototype is just the beginning. We envision a world where children learn digital citizenship while staying protected, where parents have peace of mind without sacrificing family trust, and where technology serves families rather than exploiting vulnerabilities.
+As online threats evolve, so will VigilEye. Our roadmap includes voice and image analysis, multilingual support, and enhanced privacy controls. But our core mission remains unchanged: protecting what matters most while preserving the trust that makes families strong.
+Join us in building a safer digital future for every child.
                     </p>
                 </div>
                 <div class="md:w-1/2 p-4 flex justify-end">
-                    <img src="/static/images/child2.png" alt="Our Vision" class="w-64 h-64 object-cover rounded-lg shadow-md"/>
+                    <img src="{% static 'images/vision.png' %}" alt="Our Vision" class="w-80 h-80 object-cover rounded-lg shadow-md"/>
                 </div>
             </div>
 
             <div class="flex flex-col md:flex-row-reverse items-center justify-between">
                 <div class="md:w-1/2 p-4">
                     <h2 class="text-3xl font-bold text-gray-800 mb-4">Our Mission</h2>
-                    <p class="text-gray-600 leading-relaxed text-lg">
-                        Our mission is to develop and deploy cutting-edge solutions that proactively identify and mitigate risks to child safety. We are committed to educating communities, supporting families, and collaborating with organizations worldwide to build a comprehensive network of protection around children.
+                    <p class="text-gray-600 leading-relaxed text-lg" style="text-align: justify;">
+                     We're reimagining child safety for the digital age. VigilEye combines enterprise-grade threat detection with a privacy-first approach, delivering proactive protection without the surveillance anxiety that plagues traditional monitoring solutions. Through intelligent alerts, educational features, and transparent operation, we help families navigate online risks together.
                     </p>
                 </div>
                 <div class="md:w-1/2 p-4 flex justify-start">
-                    <img src="/static/images/logo_cs.png" alt="Our Mission" class="w-64 h-64 object-cover rounded-lg shadow-md"/>
+                    <img src="{% static 'images/mission.png' %}" alt="Our Mission" class="w-80 h-80 object-cover rounded-lg shadow-md"/>
                 </div>
             </div>
         </section>
 
-        <section class="fade-in container mx-auto px-6 py-12">
+        <section id="features-section" class="fade-in container mx-auto px-6 py-12">
             <h2 class="text-4xl font-bold text-center text-gray-800 mb-12">Our Features</h2>
             <div class="relative">
                 <div id="feature-carousel" class="flex overflow-x-auto snap-x snap-mandatory scroll-smooth space-x-4 pb-4">
                     <!-- Feature Card 1 -->
                     <div class="flex-shrink-0 w-full md:w-1/3 snap-center bg-[#9687f5] rounded-lg shadow-xl p-6 text-center transform transition duration-500 hover:scale-105">
-                        <img src="/static/images/child1.png" alt="Feature 1" class="w-32 h-32 object-cover rounded-full mx-auto mb-4">
-                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Real-time Monitoring</h3>
-                        <p class="text-gray-600">Advanced AI constantly monitors online activity for potential threats and inappropriate content.</p>
+                        <img src="{% static 'images/intelligence2.png' %}" alt="Feature 1" class="w-32 h-32 object-cover rounded-full mx-auto mb-4">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Real-Time Intelligence</h3>
+                        <p class="text-gray-600" style="text-align: justify;">While other apps report incidents after harm occurs, VigilEye detects threats as they happen and immediately notifies parents with context and recommended actions.
+</p>
                     </div>
                     <!-- Feature Card 2 -->
                     <div class="flex-shrink-0 w-full md:w-1/3 snap-center bg-[#9687f5] rounded-lg shadow-xl p-6 text-center transform transition duration-500 hover:scale-105">
-                        <img src="/static/images/child4.png" alt="Feature 2" class="w-32 h-32 object-cover rounded-full mx-auto mb-4">
-                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Customizable Alerts</h3>
-                        <p class="text-gray-600">Receive instant notifications for suspicious activities, tailored to your preferences.</p>
+                        <img src="{% static 'images/privacy2.png' %}" alt="Feature 2" class="w-32 h-32 object-cover rounded-full mx-auto mb-4">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Privacy by Design</h3>
+                        <p class="text-gray-600" style="text-align: justify;">
+VigilEye uses a “Kindred ID” created from non-identifying details like browser version and screen size so the system recognizes devices without storing names or contacts.</p>
                     </div>
                     <!-- Feature Card 3 -->
                     <div class="flex-shrink-0 w-full md:w-1/3 snap-center bg-[#9687f5] rounded-lg shadow-xl p-6 text-center transform transition duration-500 hover:scale-105">
-                        <img src="/static/images/child5.png" alt="Feature 3" class="w-32 h-32 object-cover rounded-full mx-auto mb-4">
-                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Educational Resources</h3>
-                        <p class="text-gray-600">Access a wealth of resources to help educate children and parents about online safety.</p>
+                        <img src="{% static 'images/education2.png' %}" alt="Feature 3" class="w-32 h-32 object-cover rounded-full mx-auto mb-4">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Educational Approach</h3>
+                        <p class="text-gray-600" style="text-align: justify;">Beyond monitoring, VigilEye teaches children about digital citizenship through gamified safety lessons and age-appropriate guidance.
+</p>
                     </div>
                     <!-- Feature Card 4 -->
                     <div class="flex-shrink-0 w-full md:w-1/3 snap-center bg-[#9687f5] rounded-lg shadow-xl p-6 text-center transform transition duration-500 hover:scale-105">
-                        <img src="/static/images/child1.png" alt="Feature 4" class="w-32 h-32 object-cover rounded-full mx-auto mb-4">
+                        <img src="{% static 'images/messaging2.png' %}" alt="Feature 4" class="w-32 h-32 object-cover rectangle-full mx-auto mb-4">
                         <h3 class="text-2xl font-bold text-gray-800 mb-2">Secure Messaging</h3>
-                        <p class="text-gray-600">Communicate safely with family and approved contacts through encrypted channels.</p>
+                        <p class="text-gray-600" style="text-align: justify;">All alerts and notifications between child and parent interfaces are encrypted end to end. Messages about potential threats travel through secure channels, guaranteeing that only authorized family members can read them.</p>
                     </div>
                     <!-- Feature Card 5 -->
                     <div class="flex-shrink-0 w-full md:w-1/3 snap-center bg-[#9687f5] rounded-lg shadow-xl p-6 text-center transform transition duration-500 hover:scale-105">
-                        <img src="/static/images/child2.png" alt="Feature 5" class="w-32 h-32 object-cover rounded-full mx-auto mb-4">
+                        <img src="{% static 'images/location2.png' %}" alt="Feature 5" class="w-32 h-32 object-cover rounded-full mx-auto mb-4">
                         <h3 class="text-2xl font-bold text-gray-800 mb-2">Location Tracking</h3>
-                        <p class="text-gray-600">Keep track of your child's whereabouts with real-time, secure location sharing.</p>
+                        <p class="text-gray-600" style="text-align: justify;">With explicit permission, VigilEye captures approximate device location only when a high-risk alert is triggered. Location data is shown in the parent dashboard in real time and then discarded, so no continuous tracking occurs.
+
+</p>
                     </div>
                     <!-- Feature Card 6 -->
                     <div class="flex-shrink-0 w-full md:w-1/3 snap-center bg-[#9687f5] rounded-lg shadow-xl p-6 text-center transform transition duration-500 hover:scale-105">
-                        <img src="/static/images/child3.png" alt="Feature 6" class="w-32 h-32 object-cover rounded-full mx-auto mb-4">
+                        <img src="{% static 'images/app_control2.png' %}" alt="Feature 6" class="w-32 h-32 object-cover rectangle-full mx-auto mb-4">
                         <h3 class="text-2xl font-bold text-gray-800 mb-2">App Usage Control</h3>
-                        <p class="text-gray-600">Manage and monitor app usage to ensure age-appropriate content and screen time.</p>
+                        <p class="text-gray-600" style="text-align: justify;">VigilEye lets parents set app-specific time limits and block or allow access as needed. Usage data is recorded only to enforce these rules and is not tied to personal identifiers, ensuring transparency and respect for privacy.
+
+</p>
                     </div>
                     <!-- Feature Card 7 -->
                     <div class="flex-shrink-0 w-full md:w-1/3 snap-center bg-[#9687f5] rounded-lg shadow-xl p-6 text-center transform transition duration-500 hover:scale-105">
-                        <img src="/static/images/child4.png" alt="Feature 7" class="w-32 h-32 object-cover rounded-full mx-auto mb-4">
+                        <img src="{% static 'images/cyberbullying2.png' %}" alt="Feature 7" class="w-32 h-32 object-cover rectangle-full mx-auto mb-4">
                         <h3 class="text-2xl font-bold text-gray-800 mb-2">Cyberbullying Detection</h3>
-                        <p class="text-gray-600">AI-powered detection of cyberbullying attempts and harmful interactions.</p>
+                        <p class="text-gray-600" style="text-align: justify;">VigilEye analyzes messages in real time to identify harassment, insults, or threatening language. When a potential cyberbullying incident is spotted, the system flags it immediately and notifies parents with context, helping address harmful behavior before it escalates.</p>
                     </div>
                 </div>
                 <button id="feature-prev-btn" class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-[#ebf0ff] text-gray-800 p-2 rounded-full shadow-xl hover:bg-[#2d284b] hover:text-white transition-colors duration-300 z-10">
@@ -217,7 +225,7 @@ Vigil was born from a simple yet powerful idea: what if we could detect genuine 
     </main>
 
     <footer class="bg-[#2d284b] text-white p-4 text-center mt-12">
-        <p>&copy; 2023 VigilEye. All rights reserved.</p>
+        <p>&copy; 2025 VigilEye. All rights reserved.</p>
     </footer>
 
     <script>
