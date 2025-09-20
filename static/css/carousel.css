@@ -33,7 +33,7 @@
 
 .carousel-container {
     position: relative;
-    max-width: 50%; /* Half of the page */
+    max-width: 50%; 
     margin: auto;
     overflow: hidden;
 }

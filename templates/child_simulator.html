@@ -29,7 +29,6 @@
     <!-- JavaScript for Carousel and Mobile Menu -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Carousel logic
             const carousel = document.getElementById('carousel');
             const prevBtn = document.getElementById('prev-btn');
             const nextBtn = document.getElementById('next-btn');
@@ -52,9 +51,8 @@
             });
 
             window.addEventListener('resize', updateCarousel);
-            updateCarousel(); // Initial call to set position
+            updateCarousel(); 
 
-            // Mobile menu logic
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
             const navLinks = document.getElementById('nav-links');

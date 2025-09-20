@@ -135,7 +135,7 @@ body.dark-mode .card-body {
     gap: 0.5rem;
 }
 
-/* Animation Effects */
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -150,7 +150,7 @@ body.dark-mode .card-body {
     animation: fadeIn 1s;
 }
 
-/* Toast Notifications */
+
 .toast {
     opacity: 0;
     transition: opacity var(--transition-speed);
@@ -160,14 +160,14 @@ body.dark-mode .card-body {
     opacity: 1;
 }
 
-/* Responsive Adjustments */
+
 @media (max-width: 992px) {
     .sidebar {
         margin-bottom: 1.5rem;
     }
 }
 
-/* Card Hover Effects */
+
 .alert-card {
     transition: transform var(--transition-speed), box-shadow var(--transition-speed);
 }
@@ -177,17 +177,17 @@ body.dark-mode .card-body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Button Hover Effects */
+
 .btn {
     transition: all var(--transition-speed);
 }
 
-/* Pagination Styles */
+
 .pagination {
     margin-bottom: 0;
 }
 
-/* Loading Indicator */
+
 .loading-spinner {
     display: inline-block;
     width: 1rem;
@@ -204,12 +204,12 @@ body.dark-mode .card-body {
     }
 }
 
-/* Risk Level Color Transitions */
+
 .risk-indicator {
     transition: background-color 0.5s ease;
 }
 
-/* Entry Animation for New Alerts */
+
 @keyframes slideInRight {
     from {
         transform: translateX(100%);
