@@ -3,92 +3,198 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vigil - Registration</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>VigilEye - Registration</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@400;500;600;700&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="{% static 'css/vigil.css' %}">
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="{% static 'css/vigil.css' %}" />
 </head>
 
 <body>
-        <div class="container">
+    <div class="container">
         <div class="form-card" id="registration-card">
             <div class="logo-container">
                 <div class="logo">
                     <i class="fas fa-shield-alt"></i>
                 </div>
-                <h1>Vigil</h1>
+                <h1>VigilEye</h1>
                 <p class="tagline">Keeping Kids Safe, Silently.</p>
             </div>
 
             <h2>Create Your Account</h2>
 
-            <form id="registration-form">
+            <form id="registration-form" method="POST" action="{% url 'dashboard' %}" novalidate>
+                {% csrf_token %}
+
                 <div class="form-group">
-                    <input type="text" id="parent-name" placeholder=" " required>
+                    <input type="text" id="parent-name" placeholder=" " required />
                     <label for="parent-name">Parent Full Name</label>
                     <div class="error-message"></div>
                 </div>
 
                 <div class="form-group">
-                    <input type="email" id="email" placeholder=" " required>
+                    <input type="email" id="email" placeholder=" " required />
                     <label for="email">Email Address</label>
                     <div class="error-message"></div>
                 </div>
 
                 <div class="form-group">
-                    <input type="tel" id="phone" placeholder=" " required>
+                    <input type="tel" id="phone" placeholder=" " required />
                     <label for="phone">Phone Number</label>
-                    <div class="error-message"></div>
+                    <button type="button" id="send-otp-btn" class="secondary-button" style="margin-top: 8px;">
+                        Send OTP
+                    </button>
+                    <div class="error-message" id="phone-error"></div>
+                </div>
+
+                <div class="form-group" id="otp-group" style="display: none;">
+                    <input type="text" id="otp" placeholder=" " maxlength="6" />
+                    <label for="otp">Enter OTP</label>
+                    <button type="button" id="verify-otp-btn" class="secondary-button" style="margin-top: 8px;">
+                        Verify OTP
+                    </button>
+                    <div class="error-message" id="otp-error"></div>
                 </div>
 
                 <div class="form-group password-group">
-                    <input type="password" id="password" placeholder=" " required>
+                    <input type="password" id="password" placeholder=" " required />
                     <label for="password">Password</label>
                     <i class="toggle-password fas fa-eye-slash"></i>
-                    <div class="error-message"></div>
-                    <div class="password-strength">
-                        <div class="strength-meter">
-                            <div class="strength-meter-fill"></div>
-                        </div>
-                        <span class="strength-text">Password strength</span>
-                    </div>
+                    <div class="error-message" id="password-error"></div>
                 </div>
 
                 <div class="form-group password-group">
-                    <input type="password" id="confirm-password" placeholder=" " required>
+                    <input type="password" id="confirm-password" placeholder=" " required />
                     <label for="confirm-password">Confirm Password</label>
                     <i class="toggle-password fas fa-eye-slash"></i>
                     <div class="error-message"></div>
                 </div>
+                 <div class="form-group">
+                     <input type="date" id="dob" placeholder=" " required max="" />
+                     <label for="dob">Date of Birth</label>
+                     <div class="error-message" id="dob-error"></div>
+                 </div>
 
                 <div class="form-group checkbox-group">
-                    <input type="checkbox" id="terms" required>
+                    <input type="checkbox" id="terms" required />
                     <label for="terms" class="checkbox-label">I agree to the <a href="#">Terms & Conditions</a></label>
                     <div class="error-message"></div>
                 </div>
 
-                <button type="submit" class="primary-button">Create Account</button>
+                <button type="submit" id="submit-btn" class="primary-button" disabled>Create Account</button>
 
                 <div class="form-footer">
-                    <p>Already have an account? <a href="login.html" class="link">Log In</a></p>
+                    <p>Already have an account? <a href="{% url 'login' %}" class="link">Log In</a></p>
                 </div>
             </form>
         </div>
     </div>
 
-    <div class="success-animation">
-        <div class="checkmark-circle">
-            <div class="checkmark draw"></div>
-        </div>
-    </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const sendOtpBtn = document.getElementById('send-otp-btn');
+        const verifyOtpBtn = document.getElementById('verify-otp-btn');
+        const phoneInput = document.getElementById('phone');
+        const otpGroup = document.getElementById('otp-group');
+        const otpInput = document.getElementById('otp');
+        const submitBtn = document.getElementById('submit-btn');
+        const phoneError = document.getElementById('phone-error');
+        const otpError = document.getElementById('otp-error');
 
-    <script src="{% static 'validation.js' %}"></script>
-</body>
+        // Function to get the CSRF token from the form
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+        sendOtpBtn.addEventListener('click', async function () {
+            const phoneNumber = phoneInput.value;
+            phoneError.textContent = ''; // Clear previous errors
+
+            if (!phoneNumber) {
+                phoneError.textContent = 'Please enter a phone number.';
+                return;
+            }
+
+            sendOtpBtn.disabled = true;
+            sendOtpBtn.textContent = 'Sending...';
+
+            try {
+                const response = await fetch('/send-otp/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken // **Include CSRF token here**
+                    },
+                    body: JSON.stringify({ phone: phoneNumber }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert(data.message);
+                    otpGroup.style.display = 'block';
+                    phoneInput.readOnly = true; // Prevent user from changing the number
+                } else {
+                    phoneError.textContent = 'Error: ' + data.error;
+                }
+            } catch (error) {
+                phoneError.textContent = 'An unexpected error occurred. Please try again.';
+            } finally {
+                sendOtpBtn.disabled = false;
+                sendOtpBtn.textContent = 'Send OTP';
+            }
+        });
+
+        verifyOtpBtn.addEventListener('click', async function () {
+            const otp = otpInput.value;
+            otpError.textContent = ''; // Clear previous errors
+
+            if (!otp) {
+                otpError.textContent = 'Please enter the OTP.';
+                return;
+            }
+
+            verifyOtpBtn.disabled = true;
+            verifyOtpBtn.textContent = 'Verifying...';
+
+            try {
+                const response = await fetch('/verify-otp/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken // **Include CSRF token here too**
+                    },
+                    body: JSON.stringify({ otp: otp }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert(data.message);
+                    otpError.style.color = 'green';
+                    otpError.textContent = 'Verified!';
+                    // Disable OTP fields and enable the final submit button
+                    otpInput.readOnly = true;
+                    verifyOtpBtn.disabled = true;
+                    submitBtn.disabled = false;
+                } else {
+                    otpError.textContent = 'Error: ' + data.error;
+                }
+            } catch (error) {
+                otpError.textContent = 'An unexpected error occurred.';
+            } finally {
+                if (!otpInput.readOnly) {
+                    verifyOtpBtn.disabled = false;
+                    verifyOtpBtn.textContent = 'Verify OTP';
+                }
+            }
+        });
+    });
+    </script>
+
+    </body>
 
 </html>

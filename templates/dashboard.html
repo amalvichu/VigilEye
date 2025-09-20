@@ -71,27 +71,313 @@
                     <div class="card-body">
                         <div class="stat-item mb-3">
                             <h6>Total Alerts</h6>
-                            <span class="badge bg-primary rounded-pill">{{ page_obj.paginator.count }}</span>
+                            <span class="badge bg-primary rounded-pill">{{ total_alerts }}</span>
                         </div>
                         <div class="stat-item mb-3">
                             <h6>High Risk</h6>
-                            <span class="badge bg-danger rounded-pill">{{ critical_alerts|length }}</span>
+                            <span class="badge bg-danger rounded-pill">{{ high_risk_count }}</span>
+                        </div>
+                        <div class="stat-item mb-3">
+                            <h6>Medium Risk</h6>
+                            <span class="badge bg-warning rounded-pill">{{ medium_risk_count }}</span>
                         </div>
                         <div class="stat-item">
-                            <h6>Acknowledged</h6>
-                            <span class="badge bg-success rounded-pill">0</span>
+                            <h6>Low Risk</h6>
+                            <span class="badge bg-info rounded-pill">{{ low_risk_count }}</span>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="col-lg-10 col-md-12">
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-header bg-danger text-white d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0">
-                            <i class="fas fa-exclamation-triangle me-2"></i>
-                            Critical Alerts
-                        </h5>
+                <div class="quick-stats mb-4">
+                    <h5>Quick Stats</h5>
+                    <div class="row">
+                        <div class="col-md-3"><div class="card bg-primary text-white mb-3"><div class="card-body">Total Alerts: {{ total_alerts }}</div></div></div>
+                        <div class="col-md-3"><div class="card bg-danger text-white mb-3"><div class="card-body">High Risk: {{ high_risk_count }}</div></div></div>
+                        <div class="col-md-3"><div class="card bg-warning text-dark mb-3"><div class="card-body">Medium Risk: {{ medium_risk_count }}</div></div></div>
+                        <div class="col-md-3"><div class="card bg-info text-white mb-3"><div class="card-body">Low Risk: {{ low_risk_count }}</div></div></div>
+                    </div>
+                </div>
+
+                <!-- Main Content Area for Tabs -->
+                <div class="row mt-4">
+                    <!-- Left Sidebar for Navigation -->
+                    <div class="col-md-3">
+                        <div class="list-group" id="list-tab" role="tablist">
+                            <a class="list-group-item list-group-item-action active" id="list-risk-alert-overview-list" data-bs-toggle="list" href="#list-risk-alert-overview" role="tab" aria-controls="list-risk-alert-overview">Risk Alert Overview</a>
+                            <a class="list-group-item list-group-item-action" id="list-location-snapshot-list" data-bs-toggle="list" href="#list-location-snapshot" role="tab" aria-controls="list-location-snapshot">Location Snapshot</a>
+                            <a class="list-group-item list-group-item-action" id="list-realtime-notifications-list" data-bs-toggle="list" href="#list-realtime-notifications" role="tab" aria-controls="list-realtime-notifications">Real-time Notifications</a>
+                            <a class="list-group-item list-group-item-action" id="list-incident-report-list" data-bs-toggle="list" href="#list-incident-report" role="tab" aria-controls="list-incident-report">Incident Report Generation</a>
+                            <a class="list-group-item list-group-item-action" id="list-kindred-id-list" data-bs-toggle="list" href="#list-kindred-id" role="tab" aria-controls="list-kindred-id">Kindred ID Management</a>
+                            <a class="list-group-item list-group-item-action" id="list-critical-alerts-list" data-bs-toggle="list" href="#list-critical-alerts" role="tab" aria-controls="list-critical-alerts">Critical Alerts</a>
+                        </div>
+                    </div>
+
+                    <!-- Content Area for Tabs -->
+                    <div class="col-md-9">
+                        <div class="tab-content" id="nav-tabContent">
+                            <div class="tab-pane fade show active" id="list-risk-alert-overview" role="tabpanel" aria-labelledby="list-risk-alert-overview-list">
+                                <!-- Risk Alert Overview -->
+                                <div class="card mb-4 shadow-sm">
+                                    <div class="card-header bg-primary text-white">
+                                        <h5 class="mb-0">
+                                            <i class="fas fa-bell me-2"></i>
+                                            Risk Alert Overview
+                                        </h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Summary of all active risks and their statuses.</p>
+                                        <div class="row text-center">
+                                            <div class="col-md-3">
+                                                <div class="p-3 border rounded mb-3">
+                                                    <h5>Total Alerts</h5>
+                                                    <p class="fs-4 text-primary">{{ total_alerts }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="p-3 border rounded mb-3">
+                                                    <h5>High Risk</h5>
+                                                    <p class="fs-4 text-danger">{{ high_risk_count }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="p-3 border rounded mb-3">
+                                                    <h5>Medium Risk</h5>
+                                                    <p class="fs-4 text-warning">{{ medium_risk_count }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="p-3 border rounded mb-3">
+                                                    <h5>Low Risk</h5>
+                                                    <p class="fs-4 text-info">{{ low_risk_count }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex gap-2 mt-3">
+                                            <a href="{% url 'text_input' %}" class="btn btn-primary">
+                                                <i class="fas fa-plus me-1"></i>Test Message Input
+                                            </a>
+                                            <a href="#" class="btn btn-outline-primary">View All Alerts</a>
+                                        </div>
+                                        
+                                        <!-- Recent Alerts -->
+                                        {% if page_obj %}
+                                        <div class="mt-4">
+                                            <h6><i class="fas fa-clock me-1"></i> Recent Alerts</h6>
+                                            <div class="list-group">
+                                                {% for alert in page_obj|slice:":5" %}
+                                                <div class="list-group-item d-flex justify-content-between align-items-start">
+                                                    <div class="ms-2 me-auto">
+                                                        <div class="fw-bold">
+                                                            <span class="badge 
+                                                                {% if alert.score >= 7 %}bg-danger
+                                                                {% elif alert.score >= 4 %}bg-warning
+                                                                {% elif alert.score >= 1 %}bg-info
+                                                                {% else %}bg-success{% endif %} me-2">
+                                                                {{ alert.get_risk_level|title }}
+                                                            </span>
+                                                            {{ alert.device.kindred_id }}
+                                                        </div>
+                                                        <small class="text-muted">{{ alert.excerpt|truncatechars:100 }}</small>
+                                                    </div>
+                                                    <small class="text-muted">{{ alert.timestamp|timesince }} ago</small>
+                                                </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="list-location-snapshot" role="tabpanel" aria-labelledby="list-location-snapshot-list">
+                                <!-- Location Snapshot -->
+                                <div class="card mb-4 shadow-sm">
+                                    <div class="card-header bg-success text-white">
+                                        <h5 class="mb-0">
+                                            <i class="fas fa-map-marker-alt me-2"></i>
+                                            Location Snapshot
+                                        </h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Real-time location of monitored children.</p>
+                                        
+                                        <!-- Location Tracking Toggle -->
+                                        <div class="mb-3">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="locationTrackingToggle">
+                                                <label class="form-check-label" for="locationTrackingToggle">
+                                                    Enable Location Tracking
+                                                </label>
+                                            </div>
+                                            <small class="text-muted">Toggle location tracking for all devices</small>
+                                        </div>
+                                        
+                                        <!-- Recent Locations -->
+                                        {% if recent_locations %}
+                                        <div class="mb-3">
+                                            <h6><i class="fas fa-map-marker-alt me-1"></i> Recent Locations</h6>
+                                            <div class="list-group" style="max-height: 200px; overflow-y: auto;">
+                                                {% for location in recent_locations %}
+                                                <div class="list-group-item d-flex justify-content-between align-items-start">
+                                                    <div class="ms-2 me-auto">
+                                                        <div class="fw-bold">{{ location.device.kindred_id }}</div>
+                                                        <small class="text-muted">
+                                                            {{ location.latitude }}, {{ location.longitude }}
+                                                            {% if location.accuracy %}(±{{ location.accuracy|floatformat:0 }}m){% endif %}
+                                                        </small>
+                                                    </div>
+                                                    <div class="d-flex flex-column align-items-end">
+                                                        <small class="text-muted">{{ location.timestamp|timesince }} ago</small>
+                                                        <a href="{{ location.get_google_maps_url }}" target="_blank" class="btn btn-sm btn-outline-primary mt-1">
+                                                            <i class="fas fa-external-link-alt me-1"></i>View
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                        {% endif %}
+                                        
+                                        <!-- Map Container -->
+                                        <div id="map-container" style="height: 300px; background-color: #e9ecef; display: flex; justify-content: center; align-items: center; color: #6c757d; border-radius: 8px;">
+                                            {% if recent_locations %}
+                                                <div class="text-center">
+                                                    <i class="fas fa-map-marked-alt fa-3x mb-3"></i>
+                                                    <p>Click on location links above to view on Google Maps</p>
+                                                    <small class="text-muted">Map integration with Leaflet.js coming soon...</small>
+                                                </div>
+                                            {% else %}
+                                                <div class="text-center">
+                                                    <i class="fas fa-map-marked-alt fa-3x mb-3"></i>
+                                                    <p>No location data available</p>
+                                                    <small class="text-muted">Enable location tracking and have children visit the text input page</small>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                        
+                                        <div class="d-flex gap-2 mt-3">
+                                            <button class="btn btn-success" onclick="refreshLocations()">
+                                                <i class="fas fa-sync me-1"></i>Refresh Locations
+                                            </button>
+                                            <a href="{% url 'text_input' %}" class="btn btn-outline-success">
+                                                <i class="fas fa-plus me-1"></i>Test Location
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="list-realtime-notifications" role="tabpanel" aria-labelledby="list-realtime-notifications-list">
+                                <!-- Real-time Notifications (Placeholder) -->
+                                <div class="card mb-4 shadow-sm">
+                                    <div class="card-header bg-info text-white">
+                                        <h5 class="mb-0">
+                                            <i class="fas fa-bell me-2"></i>
+                                            Real-time Notifications
+                                        </h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Stay updated with instant alerts and activities.</p>
+                                        <ul class="list-group">
+                                            <li class="list-group-item">No new notifications.</li>
+                                        </ul>
+                                        <a href="#" class="btn btn-info mt-3">View All Notifications</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="list-incident-report" role="tabpanel" aria-labelledby="list-incident-report-list">
+                                <!-- Incident Report Generation -->
+                                <div class="card mb-4 shadow-sm">
+                                    <div class="card-header bg-warning text-white">
+                                        <h5 class="mb-0">
+                                            <i class="fas fa-file-alt me-2"></i>
+                                            Incident Report Generation
+                                        </h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Generate comprehensive reports for incidents and activities.</p>
+                                        <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#reportGenerationModal">
+                                            Generate New Report
+                                        </button>
+                                        <div class="modal fade" id="reportGenerationModal" tabindex="-1" aria-labelledby="reportGenerationModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="reportGenerationModalLabel">Generate Incident Report</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form>
+                                                            <div class="mb-3">
+                                                                <label for="reportType" class="form-label">Report Type</label>
+                                                                <select class="form-select" id="reportType">
+                                                                    <option selected>Choose...</option>
+                                                                    <option value="1">Daily</option>
+                                                                    <option value="2">Weekly</option>
+                                                                    <option value="3">Custom Range</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="childSelect" class="form-label">Select Child</label>
+                                                                <select class="form-select" id="childSelect">
+                                                                    <option selected>All Children</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="dateRange" class="form-label">Date Range</label>
+                                                                <input type="text" class="form-control" id="dateRange" placeholder="Select date range">
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-primary">Generate Report</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="list-kindred-id" role="tabpanel" aria-labelledby="list-kindred-id-list">
+                                <!-- Kindred ID Section -->
+                                <div class="card mb-4 shadow-sm">
+                                    <div class="card-header bg-dark text-white">
+                                        <h5 class="mb-0">
+                                            <i class="fas fa-fingerprint me-2"></i>
+                                            Kindred ID Management
+                                        </h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Manage cryptographic IDs for each child for enhanced security and privacy.</p>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" placeholder="Child's Name" aria-label="Child's Name" id="childNameForKindredId">
+                                            <button class="btn btn-primary" type="button" id="generateKindredIdBtn">Generate Kindred ID</button>
+                                        </div>
+                                        <div id="kindredIdOutput" class="mt-2 p-2 border rounded" style="display: none;">
+                                            <strong>Generated ID:</strong> <span id="generatedId"></span>
+                                        </div>
+                                        <ul class="list-group mt-3 kindred-id-list">
+                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                Child 1
+                                                <span class="badge bg-secondary">KID-XXXX-XXXX</span>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                Child 2
+                                                <span class="badge bg-secondary">KID-YYYY-YYYY</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="list-critical-alerts" role="tabpanel" aria-labelledby="list-critical-alerts-list">
+                                <!-- Critical Alerts -->
+                                <div class="card mb-4 shadow-sm">
+                                    <div class="card-header bg-danger text-white d-flex justify-content-between align-items-center">
+                                        <h5 class="mb-0">
+                                            <i class="fas fa-exclamation-triangle me-2"></i>
+                                            Critical Alerts
+                                        </h5>
                         <div class="carousel-controls">
                             <button class="btn btn-sm btn-outline-light" id="criticalPrev">
                                 <i class="fas fa-chevron-left"></i>
@@ -160,6 +446,168 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/static/dashboard/js/dashboard.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Kindred ID Generation
+            const generateKindredIdBtn = document.getElementById('generateKindredIdBtn');
+            if (generateKindredIdBtn) {
+                generateKindredIdBtn.addEventListener('click', function() {
+                    const childNameInput = document.getElementById('childNameForKindredId');
+                    const childName = childNameInput.value;
+                    if (childName) {
+                        const generatedId = 'KID-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+                        document.getElementById('generatedId').textContent = generatedId;
+                        document.getElementById('kindredIdOutput').style.display = 'block';
+
+                        const ul = document.querySelector('.kindred-id-list');
+                        if (ul) {
+                            const li = document.createElement('li');
+                            li.className = 'list-group-item d-flex justify-content-between align-items-center';
+                            li.innerHTML = `${childName}<span class="badge bg-secondary">${generatedId}</span>`;
+                            ul.appendChild(li);
+                        }
+                        childNameInput.value = ''; // Clear input after generation
+                    } else {
+                        alert('Please enter a child\'s name.');
+                    }
+                });
+            }
+
+            // Report Generation (client-side simulation)
+            const reportGenerateBtn = document.querySelector('#reportGenerationModal .btn-primary');
+            if (reportGenerateBtn) {
+                reportGenerateBtn.addEventListener('click', function() {
+                    const reportType = document.getElementById('reportType').value;
+                    const childSelect = document.getElementById('childSelect').value;
+                    const dateRange = document.getElementById('dateRange').value;
+
+                    alert(`Generating ${reportType} report for ${childSelect} for the period ${dateRange}. (This would trigger a backend process)`);
+                    var reportModal = bootstrap.Modal.getInstance(document.getElementById('reportGenerationModal'));
+                    reportModal.hide();
+                });
+            }
+
+            // Dark Mode Toggle (if applicable)
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            if (darkModeToggle) {
+                darkModeToggle.addEventListener('change', function() {
+                    document.body.classList.toggle('dark-mode');
+                    // You might want to save this preference in localStorage
+                });
+            }
+
+            // Location Tracking Toggle
+            const locationToggle = document.getElementById('locationTrackingToggle');
+            if (locationToggle) {
+                // Check current toggle state on page load
+                checkToggleState();
+                
+                locationToggle.addEventListener('change', function() {
+                    const enabled = this.checked;
+                    toggleLocationTracking(enabled);
+                });
+            }
+        });
+
+        // Location Tracking Functions
+        function checkToggleState() {
+            fetch('/api/location/status/?kindredId=CHILD-001')
+            .then(response => response.json())
+            .then(data => {
+                if (data.tracking_enabled !== undefined) {
+                    const toggle = document.getElementById('locationTrackingToggle');
+                    if (toggle) {
+                        toggle.checked = data.tracking_enabled;
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error checking toggle state:', error);
+            });
+        }
+
+        function toggleLocationTracking(enabled) {
+            fetch('/api/location/toggle/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({
+                    kindredId: 'CHILD-001', // Use consistent ID for testing
+                    enabled: enabled
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log(data.message);
+                    // Show success message
+                    showNotification(data.message, 'success');
+                } else {
+                    console.error('Error:', data.error);
+                    showNotification('Error: ' + data.error, 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showNotification('Error toggling location tracking', 'error');
+            });
+        }
+
+        function refreshLocations() {
+            fetch('/api/locations/')
+            .then(response => response.json())
+            .then(data => {
+                if (data.locations) {
+                    console.log('Locations refreshed:', data.locations);
+                    // Reload page to show updated locations
+                    location.reload();
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showNotification('Error refreshing locations', 'error');
+            });
+        }
+
+        function showNotification(message, type) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type === 'success' ? 'success' : 'danger'} alert-dismissible fade show position-fixed`;
+            notification.style.top = '20px';
+            notification.style.right = '20px';
+            notification.style.zIndex = '9999';
+            notification.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Auto remove after 3 seconds
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 3000);
+        }
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
 </body>
 
 </html>

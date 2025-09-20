@@ -1,0 +1,483 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Simulator - Child Safety Monitor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .chat-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .message-input {
+            min-height: 120px;
+            resize: vertical;
+        }
+        .kindred-id-input {
+            background-color: #f8f9fa;
+            border: 2px dashed #dee2e6;
+        }
+        .risk-indicator {
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        .risk-safe { background-color: #d1edff; color: #0c5460; }
+        .risk-low { background-color: #fff3cd; color: #856404; }
+        .risk-medium { background-color: #ffeaa7; color: #6c5ce7; }
+        .risk-high { background-color: #fab1a0; color: #e17055; }
+    </style>
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'dashboard' %}">
+                <i class="fas fa-shield-alt me-2"></i>
+                Child Safety Monitor - Chat Simulator
+            </a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="{% url 'dashboard' %}">
+                    <i class="fas fa-tachometer-alt me-1"></i>
+                    Dashboard
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container chat-container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">
+                            <i class="fas fa-comments me-2"></i>
+                            Chat Message Simulator
+                        </h4>
+                        <small>Simulate typing a chat message to test the risk detection system</small>
+                    </div>
+                    <div class="card-body">
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                    {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+
+                        <form method="post">
+                            {% csrf_token %}
+                            
+                            <div class="mb-3">
+                                <label for="kindred_id" class="form-label">
+                                    <i class="fas fa-fingerprint me-1"></i>
+                                    Child ID (Kindred ID)
+                                </label>
+                                <input type="text" class="form-control kindred-id-input" id="kindred_id" 
+                                       name="kindred_id" value="CHILD-001" 
+                                       placeholder="Enter child's unique ID">
+                                <div class="form-text">This simulates which child is sending the message</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="message_text" class="form-label">
+                                    <i class="fas fa-edit me-1"></i>
+                                    Chat Message
+                                </label>
+                                <textarea class="form-control message-input" id="message_text" 
+                                          name="message_text" rows="4" 
+                                          placeholder="Type a message here to simulate chat..."></textarea>
+                                <div class="form-text">
+                                    Try messages like "hey how old are you?" or "meet me alone" to test risk detection
+                                </div>
+                            </div>
+
+                            <!-- Location Section -->
+                            <div class="mb-3">
+                                <div class="card border-info">
+                                    <div class="card-header bg-info text-white">
+                                        <h6 class="mb-0">
+                                            <i class="fas fa-map-marker-alt me-1"></i>
+                                            Location Tracking
+                                        </h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" id="includeLocation">
+                                            <label class="form-check-label" for="includeLocation">
+                                                Include current location with message
+                                            </label>
+                                        </div>
+                                        <div id="locationStatus" class="text-muted small">
+                                            <i class="fas fa-info-circle me-1"></i>
+                                            Location will be requested when you submit the message
+                                        </div>
+                                        <div id="locationInfo" class="mt-2" style="display: none;">
+                                            <small class="text-success">
+                                                <i class="fas fa-check-circle me-1"></i>
+                                                Location captured: <span id="locationCoords"></span>
+                                            </small>
+                                        </div>
+                                        <div class="mt-2">
+                                            <button type="button" class="btn btn-sm btn-outline-primary" onclick="enableLocationTracking()">
+                                                <i class="fas fa-map-marker-alt me-1"></i>
+                                                Enable Location Tracking
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-paper-plane me-2"></i>
+                                    Send Message & Analyze Risk
+                                </button>
+                            </div>
+                        </form>
+
+                        <div class="mt-4">
+                            <h6><i class="fas fa-info-circle me-1"></i> Test Examples:</h6>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card border-success">
+                                        <div class="card-header bg-success text-white">
+                                            <small>Safe Messages</small>
+                                        </div>
+                                        <div class="card-body">
+                                            <small>
+                                                • "Hey, how are you?"<br>
+                                                • "Want to play video games?"<br>
+                                                • "See you at school tomorrow"
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card border-danger">
+                                        <div class="card-header bg-danger text-white">
+                                            <small>Risky Messages</small>
+                                        </div>
+                                        <div class="card-body">
+                                            <small>
+                                                • "How old are you?"<br>
+                                                • "Meet me alone"<br>
+                                                • "Don't tell anyone"
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <div class="alert alert-info">
+                                <h6><i class="fas fa-lightbulb me-1"></i> How it works:</h6>
+                                <ul class="mb-0">
+                                    <li><strong>Safe (0 points):</strong> Normal, friendly messages</li>
+                                    <li><strong>Low Risk (1-3 points):</strong> Complimentary or affectionate language</li>
+                                    <li><strong>Medium Risk (4-6 points):</strong> Personal questions, meeting requests</li>
+                                    <li><strong>High Risk (7+ points):</strong> Dangerous content, secrecy requests</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let currentLocation = null;
+
+        // Use consistent device ID for testing
+        document.addEventListener('DOMContentLoaded', function() {
+            const kindredInput = document.getElementById('kindred_id');
+            // Use a consistent ID for testing instead of random
+            kindredInput.value = 'CHILD-001';
+
+            // Check location tracking status
+            checkLocationTrackingStatus();
+        });
+
+        // Real-time character count
+        document.getElementById('message_text').addEventListener('input', function() {
+            const charCount = this.value.length;
+            const maxLength = 500;
+            
+            if (charCount > maxLength * 0.8) {
+                this.style.borderColor = '#dc3545';
+            } else {
+                this.style.borderColor = '#ced4da';
+            }
+        });
+
+        // Check if location tracking is enabled
+        function checkLocationTrackingStatus() {
+            const kindredId = document.getElementById('kindred_id').value;
+            
+            fetch(`/api/location/status/?kindredId=${kindredId}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Location status response:', data);
+                if (data.tracking_enabled) {
+                    document.getElementById('locationStatus').innerHTML = 
+                        '<i class="fas fa-check-circle me-1"></i>Location tracking is enabled';
+                    document.getElementById('locationStatus').className = 'text-success small';
+                    document.getElementById('includeLocation').disabled = false;
+                } else {
+                    document.getElementById('locationStatus').innerHTML = 
+                        '<i class="fas fa-times-circle me-1"></i>Location tracking is disabled by parent';
+                    document.getElementById('locationStatus').className = 'text-warning small';
+                    document.getElementById('includeLocation').disabled = true;
+                }
+            })
+            .catch(error => {
+                console.error('Error checking location status:', error);
+                // If device doesn't exist, create it with tracking enabled
+                document.getElementById('locationStatus').innerHTML = 
+                    '<i class="fas fa-info-circle me-1"></i>Device not found, creating with tracking enabled...';
+                document.getElementById('locationStatus').className = 'text-info small';
+                
+                // Enable tracking for new device
+                enableLocationTrackingForDevice(kindredId);
+            });
+        }
+
+        function enableLocationTrackingForDevice(kindredId) {
+            fetch('/api/location/toggle/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({
+                    kindredId: kindredId,
+                    enabled: true
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('locationStatus').innerHTML = 
+                        '<i class="fas fa-check-circle me-1"></i>Location tracking enabled for new device';
+                    document.getElementById('locationStatus').className = 'text-success small';
+                    document.getElementById('includeLocation').disabled = false;
+                } else {
+                    document.getElementById('locationStatus').innerHTML = 
+                        '<i class="fas fa-exclamation-triangle me-1"></i>Could not enable location tracking';
+                    document.getElementById('locationStatus').className = 'text-danger small';
+                }
+            })
+            .catch(error => {
+                console.error('Error enabling location tracking:', error);
+                document.getElementById('locationStatus').innerHTML = 
+                    '<i class="fas fa-exclamation-triangle me-1"></i>Error enabling location tracking';
+                document.getElementById('locationStatus').className = 'text-danger small';
+            });
+        }
+
+        // Override form submission to handle location
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const includeLocation = document.getElementById('includeLocation').checked;
+            const kindredId = document.getElementById('kindred_id').value;
+            const messageText = document.getElementById('message_text').value;
+            
+            if (!messageText.trim()) {
+                alert('Please enter a message');
+                return;
+            }
+            
+            if (includeLocation) {
+                getCurrentLocation(kindredId, messageText);
+            } else {
+                submitMessage(kindredId, messageText);
+            }
+        });
+
+        function getCurrentLocation(kindredId, messageText) {
+            if (!navigator.geolocation) {
+                alert('Geolocation is not supported by this browser.');
+                submitMessage(kindredId, messageText);
+                return;
+            }
+
+            document.getElementById('locationStatus').innerHTML = 
+                '<i class="fas fa-spinner fa-spin me-1"></i>Getting location...';
+            document.getElementById('locationStatus').className = 'text-info small';
+
+            navigator.geolocation.getCurrentPosition(
+                function(position) {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+                    const accuracy = position.coords.accuracy;
+                    
+                    currentLocation = { latitude, longitude, accuracy };
+                    
+                    // Update UI
+                    document.getElementById('locationCoords').textContent = 
+                        `${latitude.toFixed(6)}, ${longitude.toFixed(6)}`;
+                    document.getElementById('locationInfo').style.display = 'block';
+                    document.getElementById('locationStatus').innerHTML = 
+                        '<i class="fas fa-check-circle me-1"></i>Location captured successfully';
+                    document.getElementById('locationStatus').className = 'text-success small';
+                    
+                    // Submit message with location
+                    submitMessage(kindredId, messageText, currentLocation);
+                },
+                function(error) {
+                    console.error('Geolocation error:', error);
+                    let errorMessage = 'Unable to get location: ';
+                    switch(error.code) {
+                        case error.PERMISSION_DENIED:
+                            errorMessage += 'Permission denied';
+                            break;
+                        case error.POSITION_UNAVAILABLE:
+                            errorMessage += 'Position unavailable';
+                            break;
+                        case error.TIMEOUT:
+                            errorMessage += 'Request timeout';
+                            break;
+                        default:
+                            errorMessage += 'Unknown error';
+                            break;
+                    }
+                    
+                    document.getElementById('locationStatus').innerHTML = 
+                        '<i class="fas fa-exclamation-triangle me-1"></i>' + errorMessage;
+                    document.getElementById('locationStatus').className = 'text-warning small';
+                    
+                    // Submit message without location
+                    submitMessage(kindredId, messageText);
+                },
+                {
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: 300000 // 5 minutes
+                }
+            );
+        }
+
+        function submitMessage(kindredId, messageText, location = null) {
+            // Submit message via AJAX
+            const formData = new FormData();
+            formData.append('kindred_id', kindredId);
+            formData.append('message_text', messageText);
+            formData.append('csrfmiddlewaretoken', getCookie('csrftoken'));
+
+            fetch(window.location.href, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    // If location was captured, send it separately
+                    if (location) {
+                        console.log('Sending location data after message submission');
+                        sendLocationData(kindredId, location);
+                    }
+                    // Reload page to show results
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1000); // Give time for location to be sent
+                } else {
+                    throw new Error('Failed to submit message');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error submitting message');
+            });
+        }
+
+        function enableLocationTracking() {
+            const kindredId = document.getElementById('kindred_id').value;
+            enableLocationTrackingForDevice(kindredId);
+        }
+
+        function sendLocationData(kindredId, location) {
+            console.log('Sending location data:', { kindredId, location });
+            
+            fetch('/api/location/update/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({
+                    kindredId: kindredId,
+                    latitude: location.latitude,
+                    longitude: location.longitude,
+                    accuracy: location.accuracy
+                })
+            })
+            .then(response => {
+                console.log('Location update response status:', response.status);
+                return response.json();
+            })
+            .then(data => {
+                console.log('Location update response:', data);
+                if (data.success) {
+                    console.log('Location updated successfully:', data.message);
+                    // Show success message
+                    showLocationMessage('Location captured and saved!', 'success');
+                } else {
+                    console.error('Location update error:', data.error);
+                    showLocationMessage('Error saving location: ' + data.error, 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Location update error:', error);
+                showLocationMessage('Error saving location', 'error');
+            });
+        }
+
+        function showLocationMessage(message, type) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `alert alert-${type === 'success' ? 'success' : 'danger'} alert-dismissible fade show`;
+            messageDiv.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            // Insert after the location card
+            const locationCard = document.querySelector('.card.border-info');
+            locationCard.parentNode.insertBefore(messageDiv, locationCard.nextSibling);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                if (messageDiv.parentNode) {
+                    messageDiv.parentNode.removeChild(messageDiv);
+                }
+            }, 5000);
+        }
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+</body>
+</html>
